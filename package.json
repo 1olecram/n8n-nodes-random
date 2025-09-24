@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-random",
   "version": "0.1.0",
-  "description": "",
+  "description": "Custom n8n node to generate a random number",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/1olecram/n8n-nodes-starter.git",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Marcelo Faria Moreira",
+    "email": "marcelochave059@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/1olecram/n8n-nodes-starter.git"
   },
   "engines": {
     "node": ">=20.15"
@@ -32,16 +32,12 @@
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
-    ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/Random/Random.node.js"
     ]
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
     "@typescript-eslint/parser": "~8.32.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
@@ -50,6 +46,10 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "n8n-workflow": "*"
+    "n8n-workflow": "^1.17.0"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "n8n-core": "^1.17.0"
   }
 }
