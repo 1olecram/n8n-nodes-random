@@ -1,48 +1,128 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-random
 
-# n8n-nodes-starter
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20.15-brightgreen)](https://nodejs.org)
+[![Docker](https://img.shields.io/badge/docker-compose-blue)](https://docs.docker.com/compose/)
+[![n8n](https://img.shields.io/badge/n8n-v1.85.4-orange)](https://n8n.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+Um **nó customizado para n8n** que gera números aleatórios.  
+Ele pode ser utilizado em workflows do [n8n](https://n8n.io) para gerar valores dinâmicos entre um intervalo definido ou via API externa (random.org).
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+---
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+## 🚀 Instalação das dependências
 
-## Prerequisites
+Clone o repositório e instale os pacotes necessários:
 
-You need the following installed on your development machine:
+```bash
+git clone https://github.com/<SEU_USUARIO>/n8n-nodes-random.git
+cd n8n-nodes-random
+npm install
+```
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+---
 
-## Using this starter
+## 🐳 Executando com Docker Compose
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+O projeto está configurado para rodar com **n8n + PostgreSQL** via `docker-compose`.
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
+### Subir os serviços
+
+No diretório raiz (`n8n-compose`), execute:
+
+```bash
+docker compose up -d
+```
+
+O n8n ficará disponível em:  
+👉 [http://localhost:5679](http://localhost:5679)
+
+### Reiniciar os containers
+
+```bash
+docker compose restart n8n
+```
+
+---
+
+## ⚙️ Configuração do ambiente
+
+As principais variáveis já estão definidas no `docker-compose.yml`:
+
+```yaml
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=marBan20+
+POSTGRES_DB=n8n
+DB_TYPE=postgresdb
+DB_POSTGRESDB_HOST=postgres
+DB_POSTGRESDB_PORT=5432
+DB_POSTGRESDB_SCHEMA=public
+GENERIC_TIMEZONE=America/Sao_Paulo
+TZ=America/Sao_Paulo
+```
+
+🔑 **Importante:**
+- O volume `n8n_data` persiste as credenciais e workflows.  
+- Nós customizados ficam no diretório `custom_nodes`.  
+
+---
+
+## 🧪 Executando os testes
+
+Atualmente o projeto não possui uma suíte de testes automatizada.  
+Para validar se o nó está funcionando corretamente:
+
+1. Compile o projeto:
+   ```bash
+   npm run build
    ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
+
+2. Copie os arquivos para o diretório de nós customizados:
+   ```bash
+   rm -rf ../custom_nodes/n8n-nodes-random
+   mkdir -p ../custom_nodes/n8n-nodes-random
+   cp -r dist package.json ../custom_nodes/n8n-nodes-random/
    ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
 
-## More information
+3. Reinicie o n8n:
+   ```bash
+   docker compose restart n8n
+   ```
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+4. Acesse o editor do n8n em [http://localhost:5679](http://localhost:5679) e adicione o nó **Random** em um workflow.
 
-## License
+---
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+## 📂 Estrutura do projeto
+
+```
+n8n-nodes-random/
+├── src
+│   ├── index.ts              # Exporta os nós
+│   └── nodes
+│       └── Random
+│           ├── Random.node.ts # Implementação do nó
+│           └── icon           # Pasta de ícones (random.svg)
+├── dist                      # Código compilado (gerado pelo build)
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## 📌 Informações adicionais
+
+- Node.js **>= 20.15** é necessário para build local.  
+- O nó foi testado no n8n **v1.85.4**.  
+- Para criar novos nós, utilize o [Starter Template](https://docs.n8n.io/integrations/creating-nodes/build/starter-template/).
+
+---
+
+## 👨‍💻 Autor
+
+- **Nome:** Seu Nome  
+- **Email:** seu-email@dominio.com  
+- **GitHub:** [@seu-usuario](https://github.com/seu-usuario)  
+
+📜 Licença: [MIT](LICENSE)
