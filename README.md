@@ -1,6 +1,5 @@
 # n8n-nodes-random
 
-[![Node.js](https://img.shields.io/badge/node-%3E%3D20.15-brightgreen)](https://nodejs.org)
 [![Docker](https://img.shields.io/badge/docker-compose-blue)](https://docs.docker.com/compose/)
 [![n8n](https://img.shields.io/badge/n8n-v1.85.4-orange)](https://n8n.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
