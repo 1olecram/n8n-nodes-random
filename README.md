@@ -76,11 +76,11 @@ services:
       - N8N_RUNNERS_ENABLED=true
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_DATABASE=n8n
-      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_HOST=<USER_HOST>
       - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_USER= <USER_NAME>
+      - DB_POSTGRESDB_USER=<USER_NAME>
       - DB_POSTGRESDB_SCHEMA=public
-      - DB_POSTGRESDB_PASSWORD= <USER_PASSWORD>
+      - DB_POSTGRESDB_PASSWORD=<USER_PASSWORD>
       - N8N_ENCRYPTION_KEY=your-super-secret-encryption-key-here-change-me
       - N8N_USER_FOLDER=/home/node/.n8n
       - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
@@ -97,7 +97,7 @@ volumes:
   n8n_data:
 
 networks:
-             
+  n8n_network:     
 ```
 
 🔑 **Importante:**
