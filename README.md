@@ -4,8 +4,8 @@
 [![Docker](https://img.shields.io/badge/docker-compose-blue)](https://docs.docker.com/compose/)
 [![n8n](https://img.shields.io/badge/n8n-v1.85.4-orange)](https://n8n.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-Um **nó customizado para n8n** que gera números aleatórios.  
+ 
+ **Node customizado para n8n** que gera números aleatórios.  
 Ele pode ser utilizado em workflows do [n8n](https://n8n.io) para gerar valores dinâmicos entre um intervalo definido ou via API externa (random.org).
 
 ---
@@ -15,7 +15,7 @@ Ele pode ser utilizado em workflows do [n8n](https://n8n.io) para gerar valores 
 Clone o repositório e instale os pacotes necessários:
 
 ```bash
-git clone https://github.com/<SEU_USUARIO>/n8n-nodes-random.git
+git clone https://github.com/1olecram/n8n-nodes-random.git
 cd n8n-nodes-random
 npm install
 ```
@@ -35,7 +35,7 @@ docker compose up -d
 ```
 
 O n8n ficará disponível em:  
-👉 [http://localhost:5679](http://localhost:5679)
+👉 [http://localhost:5679](http://localhost:5678)
 
 ### Reiniciar os containers
 
@@ -50,15 +50,55 @@ docker compose restart n8n
 As principais variáveis já estão definidas no `docker-compose.yml`:
 
 ```yaml
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=marBan20+
-POSTGRES_DB=n8n
-DB_TYPE=postgresdb
-DB_POSTGRESDB_HOST=postgres
-DB_POSTGRESDB_PORT=5432
-DB_POSTGRESDB_SCHEMA=public
-GENERIC_TIMEZONE=America/Sao_Paulo
-TZ=America/Sao_Paulo
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: <USER_NAME>
+      POSTGRES_PASSWORD: <USER_PASSWORD>
+      POSTGRES_DB: n8n
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - n8n_network
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:1.85.4
+    restart: always
+    ports:
+      - "5678:5678"   
+    environment:
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_USER= <USER_NAME>
+      - DB_POSTGRESDB_SCHEMA=public
+      - DB_POSTGRESDB_PASSWORD= <USER_PASSWORD>
+      - N8N_ENCRYPTION_KEY=your-super-secret-encryption-key-here-change-me
+      - N8N_USER_FOLDER=/home/node/.n8n
+      - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./custom_nodes:/home/node/.n8n/custom
+    depends_on:
+      - postgres
+    networks:
+      - n8n_network
+
+volumes:
+  postgres_data:
+  n8n_data:
+
+networks:
+             
 ```
 
 🔑 **Importante:**
@@ -89,7 +129,7 @@ Para validar se o nó está funcionando corretamente:
    docker compose restart n8n
    ```
 
-4. Acesse o editor do n8n em [http://localhost:5679](http://localhost:5679) e adicione o nó **Random** em um workflow.
+4. Acesse o editor do n8n em [http://localhost:5679](http://localhost:5678) e adicione o nó **Random** em um workflow.
 
 ---
 
@@ -98,11 +138,11 @@ Para validar se o nó está funcionando corretamente:
 ```
 n8n-nodes-random/
 ├── src
-│   ├── index.ts              # Exporta os nós
+│   ├── index.ts              # Exporta os nodes
 │   └── nodes
 │       └── Random
 │           ├── Random.node.ts # Implementação do nó
-│           └── icon           # Pasta de ícones (random.svg)
+│           └── random.svg    # Icone SVG
 ├── dist                      # Código compilado (gerado pelo build)
 ├── package.json
 ├── tsconfig.json
@@ -113,16 +153,14 @@ n8n-nodes-random/
 
 ## 📌 Informações adicionais
 
-- Node.js **>= 20.15** é necessário para build local.  
+- Node.js + TypeScript na versão 22 (LTS) é necessário para build local.  
 - O nó foi testado no n8n **v1.85.4**.  
-- Para criar novos nós, utilize o [Starter Template](https://docs.n8n.io/integrations/creating-nodes/build/starter-template/).
+- Foi utilizado o [Starter Template](https://docs.n8n.io/integrations/creating-nodes/build/starter-template/).
 
 ---
 
 ## 👨‍💻 Autor
 
-- **Nome:** Seu Nome  
-- **Email:** seu-email@dominio.com  
-- **GitHub:** [@seu-usuario](https://github.com/seu-usuario)  
-
-📜 Licença: [MIT](LICENSE)
+- **Nome:** Marcelo Faria Moreira 
+- **Email:** marcelocahve059@gmail.com  
+- **GitHub:** [@seu-usuario](https://github.com/1olecram)  
