@@ -34,7 +34,7 @@ docker compose up -d
 ```
 
 O n8n ficará disponível em:  
-👉 [http://localhost:5679](http://localhost:5678)
+👉 [http://localhost:5678](http://localhost:5678)
 
 ### Reiniciar os containers
 
@@ -128,7 +128,7 @@ Para validar se o nó está funcionando corretamente:
    docker compose restart n8n
    ```
 
-4. Acesse o editor do n8n em [http://localhost:5679](http://localhost:5678) e adicione o nó **Random** em um workflow.
+4. Acesse o editor do n8n em [http://localhost:5678](http://localhost:5678) e adicione o nó **Random** em um workflow.
 
 ---
 
@@ -162,4 +162,4 @@ n8n-nodes-random/
 
 - **Nome:** Marcelo Faria Moreira 
 - **Email:** marcelocahve059@gmail.com  
-- **GitHub:** [@seu-usuario](https://github.com/1olecram)  
+- **GitHub:** [1olecram](https://github.com/1olecram)  
