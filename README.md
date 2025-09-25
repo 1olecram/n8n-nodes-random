@@ -118,9 +118,9 @@ Para validar se o nó está funcionando corretamente:
 
 2. Copie os arquivos para o diretório de nós customizados:
    ```bash
-   rm -rf ../custom_nodes/n8n-nodes-random
-   mkdir -p ../custom_nodes/n8n-nodes-random
-   cp -r dist package.json ../custom_nodes/n8n-nodes-random/
+    rm -rf ../custom_nodes/n8n-nodes-random
+    mkdir -p ../custom_nodes/n8n-nodes-random
+    cp -r dist package.json ../custom_nodes/n8n-nodes-random/
 	 cp dist/src/nodes/Random/Random.node.js dist/nodes/Random   
 	 cp -r dist package.json ../custom_nodes/n8n-nodes-random/
    ```
